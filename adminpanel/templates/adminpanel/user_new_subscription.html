@@ -1,0 +1,18 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нова підписка</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <form action="{% url 'user_new_subscription' user.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Створити</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Налаштування знижки</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>Налаштування знижки</h1>
+    {% if type == "online" %}<form action="{% url "online_sale" %}" method="post" style="margin-bottom: 0;" class="edit_form">{% endif %}
+    {% if type == "offline" %}<form action="{% url "offline_sale" %}" method="post" style="margin-bottom: 0;" class="edit_form">{% endif %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="item bg-lightgray" style="margin-top: 15px;">Зберегти зміни</button>
+    </form>
+</body>
+</html>

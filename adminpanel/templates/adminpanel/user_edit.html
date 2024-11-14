@@ -1,0 +1,26 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редагування користувача</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    {% if is_global %}<form action="{% url 'user_edit' current_user.user.id %}" method="post">{% endif %}
+    {% if is_global == False %}<form action="{% url 'user_edit' current_user.id %}" method="post">{% endif %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="class_courses" style="padding: 0; margin: 0; border-color: transparent; margin-top: 20px;">
+            <button type="submit" class="item bg-lightgray">Зберегти зміни</button>
+            {% if is_global %}<button class="item bg-lightgray"><a href="{% url "user" current_user.user.id %}">Повернутися назад</a></button>{% endif %}
+            {% if is_global == False %}<button class="item bg-lightgray"><a href="{% url "user" current_user.id %}">Повернутися назад</a></button>{% endif %}
+        </div>
+    </form>
+    {% if is_global == False %}
+        <button class="item bg-lightgray"><a href="{% url 'user_new_subscription' current_user.id %}">Створити підписку?</a></button>
+    {% endif %}
+</body>
+</html>

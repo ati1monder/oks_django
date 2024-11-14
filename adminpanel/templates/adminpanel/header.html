@@ -1,0 +1,22 @@
+{% load static %}
+<html>
+    <head>
+        <body>
+            {% block content %}
+            <div class="header">
+                <img src="{% static "images/oksyoganewlogo.png" %}" alt="header logo">
+                <ul class="ul_top_hypers">
+                    <li><a href="{% url 'admin_index' %}">Головна</a></li>
+                    <li><a href="{% url 'users' %}">Користувачі</a></li>
+                    <li><a href="{% url 'courses_online' %}">Заняття (Онлайн)</a></li>
+                    <li><a href="{% url 'courses_offline' %}">Заняття (Офлайн)</a></li>
+                    <li><a href="{% url 'video_index' %}">Відео</a></li>
+                    <li><a href="{% url "retreat_index" %}">Ретрит</a></li>
+                    <li><a href="{% url 'settings' %}">Налаштування</a></li>
+                    <li><a href="{% url 'admin_logout' %}">Вихід</a></li>
+                </ul>
+            </div>
+            {% endblock %}
+        </body>
+    </head>
+</html>

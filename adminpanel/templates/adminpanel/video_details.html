@@ -1,0 +1,39 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Деталі відео</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>Відео №{{ video.id }}</h1>
+    <button class="item bg-lightgray"><a href="{% url 'video_edit' video.id %}">Редагувати</a></button>
+    <button class="item bg-lightgray"><a href="{% url 'video_delete' video.id %}">Видалити</a></button>
+    <h2>Назва</h2>
+    <p>{{ video.name }}</p>
+    <h2>Опис</h2>
+    <p>{{ video.description }}</p>
+    <h2>Посилання</h2>
+    <p><a href="{{ video.link }}" style="color: blue;">{{ video.link }}</a></p>
+    {% if tags %}
+        <h2>Теги</h2>
+    {% endif %}
+    {% for tag in tags %}
+        <p class="item">{{ tag }}</p>
+    {% endfor %}
+    <h2>Коментарі</h2>
+    <div class="class_div">
+        {{ error }}
+        {% for comment in comments %}
+            <div class="comment">
+                <div class="item">Comment ID: {{ comment.id }}</div>
+                <div class="item"><a href="{% url 'user' comment.user.user.id %}" style="color: blue;">@{{ comment.user.user.username }}</a></div>
+                <div class="item">Коментар: {{ comment.comment }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

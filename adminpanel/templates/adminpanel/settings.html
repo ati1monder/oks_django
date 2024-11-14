@@ -1,0 +1,33 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Налаштування</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>Налаштування</h1>
+    <button class="item bg-lightgray"><a href="{% url "online_sale" %}">Знижка для онлайн-курсів</a></button>
+    <button class="item bg-lightgray"><a href="{% url "offline_sale" %}">Знижка для офлайн-курсів</a></button>
+    <button class="item bg-lightgray"><a href="{% url "edit_subscription" %}">Змінити підписки</a></button>
+    <button class="item bg-lightgray"><a href="{% url "edit_access_day" %}">День відкритих дверей</a></button>
+    {% if is_online_sale %}
+        <p>На онлайн-курси діє знижка до {{ online_sale_object.due_to }}</p>
+    {% else %}
+        <p>На онлайн-курси не діє знижка</p>
+    {% endif %}
+    {% if is_offline_sale %}
+        <p>На офлайн-курси діє знижка до {{ offline_sale_object.due_to }}</p>
+    {% else %}
+        <p>На офлайн-курси не діє знижка</p>
+    {% endif %}
+    {% if is_opened_doors %}
+        <p>День відкритих дверей діє до {{ opened_doors_object.due_to }}</p>
+    {% else %}
+        <p>День відкритих дверей не діє</p>
+    {% endif %}
+</body>
+</html>

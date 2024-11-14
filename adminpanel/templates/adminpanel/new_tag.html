@@ -1,0 +1,22 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новий тег</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>Новий тег</h1>
+    <form action="{% url "new_tag" %}" method="post" class="edit_form" style="margin-left: 0;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="class_courses" style="padding: 0; margin: 0; border-color: transparent; margin-top: 20px;">
+            <button type="submit" class="item">Створити</button>
+            <button class="item"><a href="{% url "video_tags" %}">Повернутись до списку тегів</a></button>
+        </div>
+    </form>
+</body>
+</html>

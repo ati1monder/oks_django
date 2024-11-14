@@ -1,0 +1,19 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Змінити доступ</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>День відкритих дверей</h1>
+    <form action="" method="post" style="margin-bottom: 0;" class="edit_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="item bg-lightgray">Змінити</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Користувачі</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1 class="users_h1">Користувачі</h1>
+    <form action="{% url 'users' %}" method="get">
+        {% csrf_token %}
+        <input type="text" name="search_users" id="search_users" class="item" placeholder="Пошук за нікнеймом">
+        <button type="submit" class="item bg-lightgray">Пошук</button>
+    </form>
+    <div class="user_div">
+        {% for user_detail in users %}
+            <div class="user">
+                <p class="item">№{{ user_detail.user.id }}</p>
+                <p class="item">Користувач: {{ user_detail.user.first_name }} {{ user_detail.user.last_name }}</p>
+                <p class="item">Нікнейм: {{ user_detail.user.username }}</p>
+                <p class="item">Пошта: <a href="mailto:{{ user_detail.user.email }}" style="color: blue;">{{ user_detail.user.email }}</a></p>
+                {% if user_detail.global_user %}
+                    <p class="item">{{ user_detail.global_user.subscription_type }}</p>
+                    <p class="item">Старт підписки: {{ user_detail.global_user.subscription_start_date }}</p>
+                    <p class="item">Кінець підписки: {{ user_detail.global_user.subscription_end_date }}</p>
+                {% endif %}
+                <button class="item"><a href="{% url 'user' user_detail.user.id %}">Подробиці</a></button>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if users.has_previous %}
+                <button class="item bg-lightgray"><a href="?page=1">&laquo; Перша</a></button>
+                <button class="item bg-lightgray"><a href="?page={{ users.previous_page_number }}">Попередня</a></button>
+            {% endif %}
+
+            <span class="current">
+                Сторінка {{ users.number }} з {{ users.paginator.num_pages }}.
+            </span>
+
+            {% if users.has_next %}
+                <button class="item bg-lightgray"><a href="?page={{ users.next_page_number }}">Наступна</a></button>
+                <button class="item bg-lightgray"><a href="?page={{ users.paginator.num_pages }}">Остання &raquo;</a></button>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% load static %}
+{% include 'adminpanel/header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редагування курсу</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <form action="" method="post" style="margin-bottom: 0;" class="edit_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="class_courses" style="border-color: transparent; padding: 0;">
+            <button type="submit" class="item bg-lightgray">Зберегти зміни</button>
+            {% if type == 'offline' %}
+                <button class="item bg-lightgray"><a href="{% url 'courses_offline' %}">Повернутися до списку класів</a></button>
+            {% endif %}
+            {% if type == 'online' %}
+                <button class="item bg-lightgray"><a href="{% url 'courses_online' %}">Повернутися до списку класів</a></button>
+                <h6 style="color: lightgray; padding: 0; margin: 0; padding-top: 5px;">*При зміні курсу буде надсилатись пошта всім учасникам з актуальною інформацією.</h6>
+            {% endif %}
+        </div>
+    </form>
+</body>
+</html>

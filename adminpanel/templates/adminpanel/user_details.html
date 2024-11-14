@@ -1,0 +1,39 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Користувач</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>Користувач {{ current_user.user.username }} {{ current_user.username }}</h1>
+    <h2>Подробиці:</h2>
+    <h3>Номер телефону</h3>
+    <p>+{{ phone_number }}</p>
+    <h3>Дата реєстрації:</h3>
+    <p>{{ current_user.date_joined }} {{ current_user.user.date_joined }}</p>
+    <h3>Підписка:</h3>
+    {% if is_global == True %}
+        <h4>Тип підписки:</h4>
+        <p>{{ current_user.subscription_type }}</p>
+        <h4>Початок підписки:</h4>
+        <p>{{ current_user.subscription_start_date }}</p>
+        <h4>Кінець підписки:</h4>
+        <p>{{ current_user.subscription_end_date }}</p>
+        <h4>Кількість витрачених грошей на підписки:</h4>
+        <p>{{ current_user.money_spent }} гривень</p>
+    {% endif %}
+    {% if is_global == False %}
+        <p>Користувач не мав підписки.</p>
+        <button class="item bg-lightgray"><a href="{% url 'user_edit' current_user.id %}">Редагувати</a></button>
+        <button class="item bg-lightgray"><a href="{% url "user_delete" current_user.id %}">Видалити</a></button>
+    {% endif %}
+    {% if is_global %}
+        <button class="item bg-lightgray"><a href="{% url 'user_edit' current_user.user.id %}">Редагувати</a></button>
+        <button class="item bg-lightgray"><a href="{% url "user_delete" current_user.user.id %}">Видалити</a></button>
+    {% endif %}
+</body>
+</html>

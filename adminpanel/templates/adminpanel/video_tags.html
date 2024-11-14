@@ -1,0 +1,33 @@
+{% load static %}
+{% include "adminpanel/header.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зміна тегів</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    {% if messages %}
+        <div class="message_div">
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <h1>Зміна тегів</h1>
+    <button class="item bg-lightgray"><a href="{% url "new_tag" %}">Створити тег</a></button>
+    <h3>Поточні теги</h3>
+    <div class="class_div">
+        {% for tag in tags %}
+        <div class="class_courses">
+            <div class="item">№ {{ forloop.counter }}</div>
+            <div class="item">Тег: "{{ tag }}"</div>
+            <div class="item">Кількість відео з цим тегом: {{ tag.video_count }}</div>
+            <button class="item"><a href="{% url 'tag_delete' tag.id %}">Видалити</a></button>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

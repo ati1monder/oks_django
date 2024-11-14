@@ -1,0 +1,68 @@
+{% load static %}
+{% include 'adminpanel/header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Відео</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var select = document.getElementById("id_category");
+            select.onchange = function() {
+                this.form.submit();
+            };
+        });
+    </script>
+</head>
+<body>
+    {% if messages %}
+        <div class="message_div">
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <h1>Відео</h1>
+    <div class="class_courses" style="border-color: transparent; padding: 0;">
+        <form action="{% url 'video_index' %}" method="get" style="margin: 0; border-color: transparent; background-color: transparent;" class="item">
+            {% csrf_token %}
+            <input type="text" name="search_video" id="search_video" placeholder="Пошук за назвою" class="item">
+            <button type="submit" class="item bg-lightgray button-lightgray">Пошук</button>
+        </form>
+        <form method="get" style="margin: 0; border-color: transparent; padding-left: 0; padding-bottom: 0; background-color: transparent;" class="item">
+            {{ form.as_p }}
+        </form>
+        <button class="item bg-lightgray"><a href="{% url 'new_video' %}">Створити нове відео</a></button>
+        <button class="item bg-lightgray"><a href="{% url 'video_tags' %}">Змінити теги</a></button>
+    </div>
+    <div class="class_div">
+        {% for video in videos %}
+            <div class="class_courses">
+                <p class="item">№ {{forloop.counter}}</p>
+                <p class="item">Назва: {{ video.name }}</p>
+                <p class="item">Посилання: <a href="{{ video.link }}" style="color: blue;">Youtube Link</a></p>
+                <button class="item"><a href="{% url 'video_details' video.id %}">Подробиці</a></button>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if videos.has_previous %}
+                <button class="item bg-lightgray"><a href="?page=1&category={{ category }}">&laquo; Перша</a></button>
+                <button class="item bg-lightgray"><a href="?page={{ videos.previous_page_number }}&category={{ category }}">Попередня</a></button>
+            {% endif %}
+
+            <span class="current">
+                Сторінка {{ videos.number }} з {{ videos.paginator.num_pages }}
+            </span>
+
+            {% if videos.has_next %}
+                <button class="item bg-lightgray"><a href="?page={{ videos.next_page_number }}&category={{ category }}">Наступна</a></button>
+                <button class="item bg-lightgray"><a href="?page={{ videos.paginator.num_pages }}&category={{ category }}">Остання &raquo;</a></button>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+{% load static %}
+{% include 'adminpanel/header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if type == 'offline' %}<title>Курси (Офлайн)</title>{% endif %}
+    {% if type == 'online' %}<title>Курси (Онлайн)</title>{% endif %}
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    {% if messages %}
+        <div class="message_div">
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if type == 'offline' %}
+        <h1>Курси (Офлайн)</h1>
+        <button class="item bg-lightgray"><a href="{% url "create_offline_course" %}">Створити нове заняття</a></button>
+    {% endif %}
+    {% if type == 'online' %}
+        <h1>Курси (Онлайн)</h1>
+        <button class="item bg-lightgray"><a href="{% url "create_online_course" %}">Створити нове заняття</a></button>
+        <button class="item bg-lightgray"><a href="{% url "create_online_future_course" %}">Створити заняття наперед</a></button>
+        <button class="item bg-lightgray"><a href="https://zoom.us/oauth/authorize?response_type=code&client_id=txkP1Hd0Raa1GIEVqiTNXg&redirect_uri=https://oksyoga.com/configuration/courses_online/new/callback">Зайти в Zoom</a></button>
+    {% endif %}
+
+    <p class="p_center">Поточні курси</p>
+    <div class="class_div">
+        {% for current_class in current_classes %}
+            <div class="class_courses">
+                <p class="item">ID: {{ current_class.id }}</p>
+                <p class="item">Назва: {{ current_class.class_name }}</p>
+                <p class="item">Дата: {{ current_class.start_date }}</p>
+                <p class="item">Час: {{ current_class.start_time }}</p>
+                {% if type == 'online' %}
+                    <p class="item">Посилання: <a href="{{ current_class.zoom_link }}" style="color: blue;">Zoom Link</a></p>
+                    <button class="item"><a href="{% url "courses_online_details_view" current_class.id %}">Подробиці</a></button>
+                {% endif %}
+                {% if type == 'offline' %}
+                    <p class="item">Локація: {{ current_class.location}}</p>
+                    <p class="item">Поточна кількість учасників: {{current_class.current_participants}}/{{current_class.max_participants}}</p>
+                    <button class="item"><a href="{% url "courses_offline_details_view" current_class.id %}">Подробиці</a></button>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if current_classes.has_previous %}
+                <button class="item bg-lightgray"><a href="?page_current=1">&laquo; Перша</a></button>
+                <button class="item bg-lightgray"><a href="?page_current={{ current_classes.previous_page_number }}">Попередня</a></button>
+            {% endif %}
+            <span class="current">
+                {% if current_classes %}Сторінка {{ current_classes.number }} з {{ current_classes.paginator.num_pages }}
+                {% else %}Немає поточних курсів{% endif %}
+            </span>
+            {% if current_classes.has_next %}
+                <button class="item bg-lightgray"><a href="?page_current={{ current_classes.next_page_number }}">Наступна</a></button>
+                <button class="item bg-lightgray"><a href="?page_current={{ current_classes.paginator.num_pages }}">Остання &raquo;</a></button>
+            {% endif %}
+        </span>
+    </div>
+
+    <p class="p_center">Майбутні курси</p>
+    <div class="class_div">
+        {% for upcoming_class in upcoming_classes %}
+            <div class="class_courses">
+                <p class="item">ID: {{ upcoming_class.id }}</p>
+                <p class="item">Назва: {{ upcoming_class.class_name }}</p>
+                <p class="item">Дата: {{ upcoming_class.start_date }}</p>
+                <p class="item">Час: {{ upcoming_class.start_time }}</p>
+                {% if type == 'online' %}
+                    <p class="item">Посилання: <a href="{{ upcoming_class.zoom_link }}" style="color: blue;">Zoom Link</a></p>
+                    <button class="item"><a href="{% url "courses_online_details_view" upcoming_class.id %}">Подробиці</a></button>
+                {% endif %}
+                {% if type == 'offline' %}
+                    <p class="item">Локація: {{ upcoming_class.location}}</p>
+                    <p class="item">Поточна кількість учасників: {{upcoming_class.current_participants}}/{{upcoming_class.max_participants}}</p>
+                    <button class="item"><a href="{% url "courses_offline_details_view" upcoming_class.id %}">Подробиці</a></button>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if upcoming_classes.has_previous %}
+                <button class="item bg-lightgray"><a href="?page_upcoming=1">&laquo; Перша</a></button>
+                <button class="item bg-lightgray"><a href="?page_upcoming={{ upcoming_classes.previous_page_number }}">Попередня</a></button>
+            {% endif %}
+            <span class="current">
+                {% if upcoming_classes %}Сторінка {{ upcoming_classes.number }} з {{ upcoming_classes.paginator.num_pages }}
+                {% else %}Немає майбутніх курсів{% endif %}
+            </span>
+            {% if upcoming_classes.has_next %}
+                <button class="item bg-lightgray"><a href="?page_upcoming={{ upcoming_classes.next_page_number }}">Наступна</a></button>
+                <button class="item bg-lightgray"><a href="?page_upcoming={{ upcoming_classes.paginator.num_pages }}">Остання &raquo;</a></button>
+            {% endif %}
+        </span>
+    </div>
+
+    <p class="p_center">Минулі курси</p>
+    <div class="class_div">
+        {% for previous_class in previous_classes %}
+            <div class="class_courses">
+                <p class="item">ID: {{ previous_class.id }}</p>
+                <p class="item">Назва: {{ previous_class.class_name }}</p>
+                <p class="item">Дата: {{ previous_class.start_date }}</p>
+                <p class="item">Час: {{ previous_class.start_time }}</p>
+                {% if type == 'online' %}
+                <p class="item">Посилання: <a href="{{ previous_class.zoom_link }}" style="color: blue;">Zoom Link</a></p>
+                    <button class="item"><a href="{% url "courses_online_details_view" previous_class.id %}">Подробиці</a></button>
+                {% endif %}
+                {% if type == 'offline' %}
+                    <p class="item">Локація: {{ previous_class.location}}</p>
+                    <p class="item">Поточна кількість учасників: {{previous_class.current_participants}}/{{previous_class.max_participants}}</p>
+                    <button class="item"><a href="{% url "courses_offline_details_view" previous_class.id %}">Подробиці</a></button>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if previous_classes.has_previous %}
+                <button class="item bg-lightgray"><a href="?page_previous=1">&laquo; Перша</a></button>
+                <button class="item bg-lightgray"><a href="?page_previous={{ previous_classes.previous_page_number }}">Попередня</a></button>
+            {% endif %}
+            <span class="current">
+                {% if previous_classes %}Сторінка {{ previous_classes.number }} з {{ previous_classes.paginator.num_pages }}
+                {% else %}Немає минулих курсів{% endif %}
+            </span>
+            {% if previous_classes.has_next %}
+                <button class="item bg-lightgray"><a href="?page_previous={{ previous_classes.next_page_number }}">Наступна</a></button>
+                <button class="item bg-lightgray"><a href="?page_previous={{ previous_classes.paginator.num_pages }}">Остання &raquo;</a></button>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% load static %}
+{% include 'adminpanel/header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подробиці курсу</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>Деталі курсу {{ class.class_name }} (№{{ class.id }})</h1>
+    <h2>Опис курсу</h2>
+    <p>{{ class.description }}</p>
+    <h2>Початок</h2>
+    <p>{{ class.start_date }} о {{ class.start_time }}</p>
+    {% if type == 'offline' %}
+        <h2>Ціна, локація</h2>
+        <p>{{ class.price }} UAH; {{ class.location }}</p>
+        <button class="item bg-lightgray"><a href="{% url "edit_offline_course" class.id %}">Редагувати</a></button>
+        <button class="item bg-lightgray"><a href="{% url "delete_offline_course" class.id %}">Видалити</a></button>
+    {% endif %}
+    {% if type == 'online' %}
+        <h2>Ціна</h2>
+        <p>{{ class.price }} UAH</p>
+        <button class="item bg-lightgray"><a href="{% url "edit_online_course" class.id %}">Редагувати</a></button>
+        <button class="item bg-lightgray"><a href="{% url "delete_online_course" class.id %}">Видалити</a></button>
+    {% endif %}
+    <h2>Зареєстровані користувачі на клас</h2>
+    <div class="user_div">
+        {% for registration in registrations %}
+            <div class="user">
+            {% if type == 'online' %}
+                <p class="item">{{ registration.user_name }}</p>
+            {% endif %}
+            {% if type == 'offline' %}
+                <p class="item">{{ registration.user_name }} {{ registration.user_surname }}</p>
+            {% endif %}
+                <p class="item">+{{ registration.number }}</p>
+                <p class="item"><a href="mailto:{{ registration.email }}" style="color: blue;">{{ registration.email }}</a></p>
+                {% if type == 'offline'%}
+                    <p class="item">Кількість зареєстрованих учасників: {{ registration.number_of_participants }}</p>
+                {% endif %}
+            </div>
+        {% empty %}
+            <li>Немає реєстрацій на цей клас.</li>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+body {
+    width: 90%;
+    margin: 0 auto;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(245, 245, 245);
+    text-align: center;
+}
+/*fefew*/
+.ul_top_hypers li {
+    display: inline;
+    padding-top: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    font-size: 20px;
+}
+.p_center {
+    font-size: 24px;
+    color: rgb(80, 80, 80);
+}
+.edit_form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    align-items: center;
+}
+.edit_form p {
+    display: flex;
+    flex-direction: column;
+}
+.edit_form p input {
+    margin-top: 10px;
+}
+form p {
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+form .class_courses {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.ul_top_hypers li a {
+    color:rgb(224, 224, 224);
+}
+.ul_top_hypers {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0;
+    background-color: #2d3748;
+    display: flex;
+    flex-direction: row;
+}
+img {
+    padding-left: 20px;
+}
+.header ul {
+    margin-top: 8px;
+    padding-left: 5px;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+h1, label {
+    text-align: center;
+    color: rgb(80, 80, 80);
+}
+label {
+    font-size: 24px;
+}
+.current {
+    color: rgb(50, 50, 50)
+}
+.user, .class_courses {
+    padding-left: 20px;
+    text-align: left;
+    border: 1px solid #b9b9b9;
+}
+.item, #id_category {
+    display: inline-block;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+.user_div, .class_div {
+    background-color: rgb(224, 224, 224);
+}
+.pagination {
+    margin-top: 20px;
+    align-items: end;
+}
+.message_div {
+    position: absolute;
+    margin-top: 10px;
+    background-color: rgb(152, 211, 117);
+    border: 1px solid #ccc;
+    max-width: max-content
+}
+.message {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.bg-lightgray {
+    background-color: rgb(255, 255, 255);
+}
+#id_description {
+    margin-top: 10px;
+    height: 200px;
+    width: 400px;
+}
+#id_link {
+    min-width: 300px;
+}
+.retreat_images {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

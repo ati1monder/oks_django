@@ -1,0 +1,20 @@
+{% load static %}
+{% include 'adminpanel/header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма для онлайн курсу</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>Форма для онлайн курсу</h1>
+    <form method="post" class="edit_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="item">Відправити</button>
+        <h6 style="color: lightgray; padding: 0; margin: 0; padding-top: 5px;">*При створенні багатьох курсів за день Ви можете наткнутись на ліміт створення посилань в Zoom. Зазвичай, обмеження пропадає на наступний день.</h6>
+    </form>
+</body>
+</html>

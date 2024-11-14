@@ -1,0 +1,43 @@
+{% load static %}
+{% include 'adminpanel/header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зміна підписки</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var select = document.getElementById("id_category");
+            select.onchange = function() {
+                this.form.submit();
+            };
+        });
+    </script>
+</head>
+<body>
+    <h1>Зміна підписки</h1>
+    <form action="{% url "edit_subscription" %}" method="get">
+        <label for="id_category">Виберіть підписку:</label>
+        <select name="subscription_id" id="id_category">
+            {% for subscription in subscriptions %}
+                <option value="{{ subscription.id }}" {% if forloop.counter == id %}selected{% endif %}>
+                    {{ subscription.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+    <form method="post">
+        {% csrf_token %}
+        <hr>
+        <div id="edit-form">
+            <input type="hidden" name="subscription_id" value="{{ id }}">
+            {% if form %}
+                {{ form.as_p }}
+                <button type="submit" class="item bg-lightgray" style="margin-top: 15px;">Зберегти зміни</button>
+            {% endif %}
+        </div>
+    </form>
+</body>
+</html>

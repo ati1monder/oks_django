@@ -1,0 +1,62 @@
+{% load static %}
+{% include 'adminpanel/header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ретрит</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('#retreat_edit_form input[type="checkbox"]').forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    document.getElementById('retreat_edit_form').submit();
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    {% if messages %}
+        <div class="message_div">
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <h1>Ретрит</h1>
+    <form id="retreat_edit_form" action="{% url 'retreat_index' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+    <button class="item bg-lightgray"><a href="{% url "upload_image" %}">Завантажити зображення</a></button>
+    <button class="item bg-lightgray"><a href="{% url "retreat_edit_text" %}">Редагувати текст</a></button>
+    <h2 style="color: rgb(80, 80, 80);">Зображення</h2>
+    <div class="retreat_images">
+        {% for image in images %}
+            <div class="retreat_image">
+                <img src="{{ image.imgur_link }}" alt="" style="max-width: 300px; max-height: 300px; width: auto; height: auto; object-fit: cover;">
+                <p style="color: rgb(80, 80, 80);">Назва: {{ image.title }}</p>
+                <p style="color: rgb(80, 80, 80);">Створено {{ image.uploaded_at }}</p>
+                <div>
+                    <button class="item bg-lightgray"><a href="{% url "delete_image" image.id %}">Видалити</a></button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <h2 style="color: rgb(80, 80, 80);">Опис</h2>
+    <p style="color: rgb(80, 80, 80);">{{ description }}</p>
+    <h2 style="color: rgb(80, 80, 80);">Зареєстровані користувачі</h2>
+    <button class="item bg-lightgray" style="margin: 0; margin-bottom: 20px;"><a href="{% url "delete_registrations" %}">Видалити всі реєстрації</a></button>
+    <div class="class_div">
+        {% for user in registered_users %}
+            <div class="class_courses">
+                <p class="item">{{ user.name }} {{ user.surname }}</p>
+                <p class="item">+38{{ user.number }}</p>
+                <p class="item"><a href="mailto:{{ user.email }}" style="color: blue;">{{ user.email }}</a></p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% load static %}
+{% include 'adminpanel/header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нове заняття</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>Нове заняття</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="item bg-lightgray">Створити</button>
+        <button type="" class="item bg-lightgray"><a href="{% url 'courses_online' %}">Скасувати</a></button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{% load static %}
+{% include 'adminpanel/header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завантаження зоображення</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+</head>
+<body>
+    <h1>Завантаження зоображення</h1>
+    <form method="post" enctype="multipart/form-data" class="edit_form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="item" style="margin-top: 15px;">Завантажити</button>
+    </form>
+</body>
+</html>
